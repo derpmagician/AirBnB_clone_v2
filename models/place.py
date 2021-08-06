@@ -20,7 +20,7 @@ class Place(BaseModel):
 # Las lineas de abajo es lo que quiero reemplazar en vez de lo de arriba
 # (quitar los michi y borrar lo de arriba menos el sheabang)
 
-"""This is the place class"""
+# """This is the place class"""
 # from os import getenv
 # import models
 # from models.base_model import BaseModel, Base
@@ -37,20 +37,20 @@ class Place(BaseModel):
 
 
 #class Place(BaseModel, Base):
-    """This is the class for Place
-    Attributes:
-        city_id: city id
-        user_id: user id
-        name: name input
-        description: string of description
-        number_rooms: number of room in int
-        number_bathrooms: number of bathrooms in int
-        max_guest: maximum guest in int
-        price_by_night:: pice for a staying in int
-        latitude: latitude in flaot
-        longitude: longitude in float
-        amenity_ids: list of Amenity ids
-    """
+#    """This is the class for Place
+#    Attributes:
+#        city_id: city id
+#        user_id: user id
+#        name: name input
+#        description: string of description
+#        number_rooms: number of room in int
+#        number_bathrooms: number of bathrooms in int
+#        max_guest: maximum guest in int
+#        price_by_night:: pice for a staying in int
+#        latitude: latitude in flaot
+#        longitude: longitude in float
+#        amenity_ids: list of Amenity ids
+#    """
 #    __tablename__ = 'places'
 
 #    city_id = Column(String(60),
@@ -78,7 +78,7 @@ class Place(BaseModel):
 #    else:
 #        @property
 #        def reviews(self):
-            """Review relationship with Places on File"""
+#            """Review relationship with Places on File"""
 #            list_of_reviews = []
 #            for key, val in models.storage.items():
 #                if type(val).__name__ == "Review":
