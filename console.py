@@ -132,7 +132,7 @@ class HBNBCommand(cmd.Cmd):
                     continue
                 k, v = each.split('=')
                 v = v.replace('_', ' ')
-                if hasattr(onj, k):
+                if hasattr(obj, k):
                     setattr(obj, k, eval(v))
             obj.save()
             print("{}".format(obj.id))
