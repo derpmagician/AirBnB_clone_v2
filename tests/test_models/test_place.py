@@ -16,8 +16,8 @@ class TestPlace(unittest.TestCase):
         cls.place = Place()
         cls.place.city_id = "1234-abcd"
         cls.place.user_id = "4321-dcba"
-        cls.place.name = "Death Star"
-        cls.place.description = "UNLIMITED POWER!!!!!"
+        cls.place.name = "Casita de la tortura de Renzo"
+        cls.place.description = "Para pasarla bien!!!!!"
         cls.place.number_rooms = 1000000
         cls.place.number_bathrooms = 1
         cls.place.max_guest = 607360
