@@ -46,24 +46,24 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, default=0, nullable=False)
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
-#    amenity_ids = []
+    # amenity_ids = []
 
-#    if getenv('HBNB_TYPE_STORAGE') == 'db':
-#        reviews = relationship('Review', backref='place')
-#        amenities = relationship("Amenity", secondary="place_amenity",
-#                                 viewonly=False,
-#                                 back_populates="place_amenities")
-#
-#    else:
-#        @property
-#        def reviews(self):
-#            """Review relationship with Places on File"""
-#            list_of_reviews = []
-#            for key, val in models.storage.items():
-#                if type(val).__name__ == "Review":
-#                    if val.place_id == self.id:
-#                        list_of_reviews.append(val)
-#            return (list_of_reviews)
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
+        reviews = relationship('Review', backref='place')
+        # amenities = relationship("Amenity", secondary="place_amenity",
+        # viewonly=False,
+        # back_populates="place_amenities")
+
+    else:
+        @property
+        def reviews(self):
+            """Review relationship with Places on File"""
+            list_of_reviews = []
+            for key, val in models.storage.items():
+                if type(val).__name__ == "Review":
+                    if val.place_id == self.id:
+                        list_of_reviews.append(val)
+            return (list_of_reviews)
 
 #        @property
 #        def amenities(self):
