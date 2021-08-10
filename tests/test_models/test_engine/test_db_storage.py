@@ -14,7 +14,7 @@ from models.review import Review
 from models.engine.db_storage import DBStorage
 from models.engine.file_storage import FileStorage
 import MySQLdb
-
+import models
 
 @unittest.skipIf(
        os.getenv('HBNB_TYPE_STORAGE') != 'db',
@@ -96,6 +96,29 @@ class TestDBStorage(unittest.TestCase):
                 self.assertEqual(line, "{}")
         self.assertIs(self.storage.reload(), None)
 
+
+class TestFileStorage(unittest.TestCase):
+    """Test the FileStorage class"""
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+    def test_all_returns_dict(self):
+        """Test that all returns a dictionaty"""
+        self.assertIs(type(models.storage.all()), dict)
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+    def test_all_no_class(self):
+        """Test that all returns all rows when no class is passed"""
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+    def test_new(self):
+        """test that new adds an object to the database"""
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+    def test_save(self):
+        """Test that save properly saves objects to file.json"""
 
 if __name__ == "__main__":
     unittest.main()
