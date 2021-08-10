@@ -9,6 +9,9 @@ import pep8
 
 class TestAmenity(unittest.TestCase):
     """this will test the Amenity class"""
+    am = Amenity(name="Wifi")
+    am.save()
+
     @classmethod
     def setUpClass(cls):
         """set up for test"""
@@ -51,6 +54,29 @@ class TestAmenity(unittest.TestCase):
     def test_attribute_types_Amenity(self):
         """test attribute type for Amenity"""
         self.assertEqual(type(self.amenity.name), str)
+
+    def test_Amenity_inheritence(self):
+        """tests that the Amenity class Inherits from BaseModel"""
+        new_amenity = self.am
+        self.assertIsInstance(new_amenity, BaseModel)
+
+    def test_Amenity_attributes_2(self):
+        """Test that Amenity class had name attribute."""
+        new_amenity = self.am
+        self.assertTrue("name" in new_amenity.__dir__())
+        self.assertEqual(new_amenity.name, "Wifi")
+
+    def test_Amenity_attribute_type(self):
+        """Test that Amenity class had name attribute's type."""
+        new_amenity = self.am
+        name_value = getattr(new_amenity, "name")
+        self.assertIsInstance(name_value, str)
+        name_value = getattr(new_amenity, "id")
+        self.assertIsInstance(name_value, str)
+        name_value = getattr(new_amenity, "created_at")
+        self.assertIsInstance(name_value, datetime)
+        name_value = getattr(new_amenity, "updated_at")
+        self.assertIsInstance(name_value, datetime)
 
     @unittest.skipIf(
         os.getenv('HBNB_TYPE_STORAGE') == 'db',
