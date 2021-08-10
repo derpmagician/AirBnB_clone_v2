@@ -6,13 +6,13 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship, backref
 
-# place_amenity = Table('place_amenity', Base.metadata,
-#                      Column('place_id', String(60),
-#                             ForeignKey('places.id'), primary_key=True,
-#                             nullable=False),
-#                      Column('amenity_id', String(60),
-#                             ForeignKey('amenities.id'), primary_key=True,
-#                             nullable=False))
+place_amenity = Table('place_amenity', Base.metadata,
+                      Column('place_id', String(60),
+                             ForeignKey('places.id'), primary_key=True,
+                             nullable=False),
+                      Column('amenity_id', String(60),
+                             ForeignKey('amenities.id'), primary_key=True,
+                             nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -46,13 +46,12 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, default=0, nullable=False)
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
-    # amenity_ids = []
+    amenity_ids = []
 
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         reviews = relationship('Review', backref='place')
-        # amenities = relationship("Amenity", secondary="place_amenity",
-        # viewonly=False,
-        # back_populates="place_amenities")
+        amenities = relationship("Amenity", secondary="place_amenity",
+                                 viewonly=False)
 
     else:
         @property
@@ -65,17 +64,17 @@ class Place(BaseModel, Base):
                         list_of_reviews.append(val)
             return (list_of_reviews)
 
-#        @property
-#        def amenities(self):
-#            """ Return list of amenities """
-#            aux = []
-#            for id in self.amenity_ids:
-#                key = 'Amenity.{}'.format(id)
-#                if key in models.storage.all().keys():
-#                    aux.append(models.storage.all()[key])
-#            return aux
+        @property
+        def amenities(self):
+            """ Return list of amenities """
+            aux = []
+            for id in self.amenity_ids:
+                key = 'Amenity.{}'.format(id)
+                if key in models.storage.all().keys():
+                    aux.append(models.storage.all()[key])
+            return aux
 
-#       @amenities.setter
-#        def amenities(self, obj=None):
-#            if obj and type(obj).__name__ == 'Amenity':
-#                self.amenity_ids.append(obj.id)
+        @amenities.setter
+        def amenities(self, obj=None):
+            if obj and type(obj).__name__ == 'Amenity':
+                self.amenity_ids.append(obj.id)
