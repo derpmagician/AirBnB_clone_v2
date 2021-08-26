@@ -2,22 +2,24 @@
 """ Compress webstatic"""
 
 from fabric.api import local
-from datetime import datetime
-from os import path
+from datetime import datetime as dt
+import os
+
+
+now = dt.now()
 
 
 def do_pack():
-    """
-    Generates a .tgz archive of the web_static folder of this repo
-    """    
+    """Packs web_static files into .tgz file"""
 
-    date = datetime.now().strftime("%Y%m%d%H%M%S")
-    name = "versions/web_static_" + date + ".tgz"
+    file_name = 'versions/web_static_{}.tgz'\
+                .format(now.strftime("%Y%m%d%H%M%S"))
 
-    try:
-        if path.exists("versions") is False:
-            local("mkdir versions")
-        local("tar -zcvf {} web_static".format(name))
-        return name
-    except:
-        return None
+    if not os.path.isdir("versions"):
+        if local("mkdir -p versions").failed:
+            return None
+
+    command = local("tar -cvzf {} web_static".format(file_name))
+    if command.succeeded:
+        return file_name
+    return None
