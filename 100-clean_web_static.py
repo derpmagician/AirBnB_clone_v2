@@ -4,7 +4,7 @@ Deletes out-of-date files. from servers
 """
 from fabric.api import local, env, run
 
-env.hosts = ['34.75.111.103', '18.206.176.219	']
+env.hosts = ['34.75.111.103', '18.206.176.219']
 
 
 def do_clean(number=0):
