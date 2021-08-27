@@ -2,18 +2,24 @@
 """
 Deletes out-of-date files. from servers
 """
-from fabric.api import local, env, run
+from fabric.api import local, env, run, lcd
 
 env.hosts = ['34.75.111.103', '18.206.176.219']
 
 
 def do_clean(number=0):
     """
-    Select how the number of files to keep
+    Removes outdated files
     """
-    number = 2 if number < 1 else number + 1
-    local("ls -d -1t versions/* | tail -n +{} | \
-    xargs -d '\n' rm -f".format(number))
+    n = int(number)
+    if n < 0:
+        return
 
-    run("ls -d -1tr /data/web_static/releases/* | tail -n +{} | \
-    xargs -d '\n' rm -rf".format(number))
+    n = n + 1 if n > 0 else 2
+    cmd = 'rm -rf $(ls -1t | tail -n+{})'.format(n)
+
+    with lcd('versions'):
+        local(cmd)
+
+    with lcd('/data/web_static/releases'):
+        run(cmd)
