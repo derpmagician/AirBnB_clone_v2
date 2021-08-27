@@ -1,69 +1,59 @@
-include stdlib
+# Nginx config in puppet
+$config="# Default server configuration
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    add_header X-Served-By \$hostname;
+    root /var/www/html;
+    index index.html index.htm;
+ 
+    location /hbnb_static {
+        alias /data/web_static/current;
+        index index.html index.htm;
+    }
+    location =/redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+    error_page 404 /404.html;
+}
+"
 
-# Update package lists
-exec { 'Update lists':
+exec { 'update packages':
     command => '/usr/bin/apt update'
 }
-
-# Install Nginx
-package { 'nginx':
-    ensure  => 'present',
-    require => Exec['Update lists']
+-> package { 'nginx':
+    ensure => 'installed'
 }
-
-# Create the directory tree
-exec { 'Create Directory Tree':
-    command => '/bin/mkdir -p /data/web_static/releases/test /data/web_static/shared',
-    require => Package['nginx']
+-> exec { 'create shred folder':
+    command => '/bin/mkdir -p /data/web_static/shared/'
 }
-
-$head = "  <head>\n  </head>"
-$body = "  <body>\n    Holberton School\n  </body>"
-$index = "<html>\n${head}\n${body}\n</html>\n"
-
-# Create a fake HTML file with simple content,
-# to test Nginx configuration
-file { 'Create Fake HTML':
+-> exec { 'create data releases folder':
+    command => '/bin/mkdir -p /data/web_static/releases/test/'
+}
+-> file { 'create test index.html':
     ensure  => 'present',
+    name    => 'index.html',
     path    => '/data/web_static/releases/test/index.html',
-    content => $index,
-    require => Exec['Create Directory Tree']
+    content => 'Holberton School for the win!\n'
 }
-
-# Create a symbolic link '/data/web_static/current' linked to the
-# '/data/web_static/releases/test/' folder.
-file { 'Create Symbolic Link':
-    ensure  => 'link',
-    path    => '/data/web_static/current',
-    force   => true,
-    target  => '/data/web_static/releases/test',
-    require => File['Create Fake HTML']
+-> exec { 'remove symbolic link':
+    command => '/bin/rm -rf /data/web_static/current'
 }
-
-# Ensures that Nginx is running
-service { 'nginx':
-    ensure  => 'running',
-    enable  => true,
-    require => Package['nginx']
+-> exec { 'create a simbolic link for current release':
+    command => '/bin/ln -s /data/web_static/releases/test/ /data/web_static/current'
 }
-
-# Set permissions for 'ubuntu' user
-exec { 'Set permissions':
-    command => '/bin/chown -R ubuntu:ubuntu /data',
-    require => File['Create Symbolic Link']
+-> exec { 'change owner':
+    command => '/bin/chown -R ubuntu /data'
 }
-
-# Set a new location for a Nginx VHost 
-$loc_header='location /hbnb_static/ {'
-$loc_content='alias /data/web_static/current/;'
-$new_location="\n\t${loc_header}\n\t\t${loc_content}\n\t}\n"
-
-# Write the new location to the default Nginx VHost
-file_line { 'Set Nginx Location':
+-> exec { 'change group':
+    command => '/bin/chgrp -R ubuntu /data'
+}
+-> file { 'update nginx config file':
     ensure  => 'present',
+    name    => 'default',
     path    => '/etc/nginx/sites-available/default',
-    after   => 'server_name \_;',
-    line    => $new_location,
-    notify  => Service['nginx'],
-    require => Exec['Set permissions']
+    content => $config
+}
+-> service { 'nginx':
+    ensure => 'running'
 }
