@@ -15,6 +15,10 @@ def hbnb():
     """print"""
     return 'HBNB'
 
+@app.route('/c/<name>', strict_slashes=False)
+def cname(name):
+    """print name"""
+    return 'C {}'.format(name.replace('_', ' '))
 
 if __name__ == '__main__':
     app.run()
