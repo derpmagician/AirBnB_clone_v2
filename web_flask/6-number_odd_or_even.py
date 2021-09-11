@@ -51,6 +51,5 @@ def oddeven(n):
     return render_template('6-number_odd_or_even.html', n=n, parit=parit)
 
 
-
 if __name__ == '__main__':
     app.run()
