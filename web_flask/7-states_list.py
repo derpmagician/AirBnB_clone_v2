@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ flask """
-from flask import Flask, render_template,
+from flask import Flask, render_template, storage
+from models.state import State
 
 app = Flask(__name__)
 
