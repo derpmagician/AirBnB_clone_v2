@@ -17,14 +17,7 @@ def close_storage(self):
     def cities_by_states():
         """List States by City"""
         states = storage.all(State).values()
-        cities = list()
-
-        for state in states:
-            for city in state.cities:
-                cities.append(city)
-
-        return render_template('8-cities_by_states.html',
-                               states=states, state_cities=cities)
+        return render_template('8-cities_by_states.html', states=states)
 
 
 if __name__ == '__main__':
