@@ -10,6 +10,7 @@ def hello():
     """print"""
     return 'Hello HBNB!'
 
+
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
     """print"""
@@ -26,6 +27,7 @@ def ctext(text):
 def pytext(text='is cool'):
     """print text"""
     return 'Python {}'.format(text.replace('_', ' '))
+
 
 @app.route('/number/<int:n>', strict_slashes=False)
 def nnumber(n):

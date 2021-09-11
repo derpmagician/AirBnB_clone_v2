@@ -10,10 +10,12 @@ def hello():
     """print"""
     return 'Hello HBNB!'
 
+
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
     """print"""
     return 'HBNB'
+
 
 @app.route('/c/<text>', strict_slashes=False)
 def ctext(text):
@@ -27,11 +29,13 @@ def pytext(text='is cool'):
     """print text"""
     return 'Python {}'.format(text.replace('_', ' '))
 
+
 @app.route('/number/<int:n>', strict_slashes=False)
 def nnumber(n):
     """"Print number"""
     if isinstance(n, int):
         return '{} is a number'.format(n)
+
 
 @app.route('/number_template/<int:n>', strict_slashes=False)
 def ntemplate(n):
