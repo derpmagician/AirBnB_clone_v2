@@ -16,7 +16,7 @@ def close_storage(self):
 
 @app.route('/states_list', strict_slashes=False)
 def h1():
-    """ List States """
+    """List States"""
     states = storage.all(State).values()
     return render_template('7-states_list.html', states=states)
 
