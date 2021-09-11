@@ -14,10 +14,10 @@ def close_storage(self):
 
 
 @app.route('/cities_by_states', strict_slashes=False)
-    def cities_by_states():
-        """List States by City"""
-        states = storage.all(State).values()
-        return render_template('8-cities_by_states.html', states=states)
+def cities_by_states():
+    """Lists states by cities"""
+    states = storage.all(State).values()
+    return render_template('8-cities_by_states.html', states=states)
 
 
 if __name__ == '__main__':
