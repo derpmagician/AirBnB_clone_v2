@@ -14,7 +14,7 @@ def close_storage(self):
 
 
 @app.route('/states/<id>', strict_slashes=False)
-def states_id():
+def states_id(state_id=None):
     """Lists states by cities"""
     states = storage.all(State).values()
     if state_id != None:
