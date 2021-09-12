@@ -12,6 +12,7 @@ def close_storage(self):
     """Remove the current SQLAlchemy Session."""
     storage.close()
 
+
 @app.route('/states_list', strict_slashes=False)
 def h1():
     """List States"""
