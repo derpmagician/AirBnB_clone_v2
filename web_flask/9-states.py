@@ -14,18 +14,15 @@ def close_storage(self):
 
 
 @app.route('/states/', strict_slashes=False)
-def only_states():
-    """Displays an HTML page with a list of all States.
-        States are sorted by name.
-        """
+def no_cities():
+    """states only"""
     all_states = storage.all('State')
     return render_template('9-states.html', states=all_states)
 
 
 @app.route('/states/<id>', strict_slashes=False)
 def state_and_cities(id):
-    """Displays an HTML page with info about <id>, if it exists.
-    """
+    """by id"""
     for state in storage.all("State").values():
         if state.id == id:
             return render_template("9-states.html", state=state)
