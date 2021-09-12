@@ -17,11 +17,10 @@ def close_storage(self):
 def states_id():
     """Lists states by cities"""
     states = storage.all(State).values()
-    if id == state.id:
-        return render_template('9-states.html',
-                               state=state, state_cities=state.cities)
+    if state_id != None:
+        state_id = 'State.' + state_id
+    return render_template('9-states.html', states=states, state_id=state_id)
 
-    return render_template('9-states.html', not_found=True)
 
 if __name__ == '__main__':
     app.run()
