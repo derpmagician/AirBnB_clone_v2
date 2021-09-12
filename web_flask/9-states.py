@@ -18,6 +18,7 @@ def h1():
     states = storage.all(State).values()
     return render_template('7-states_list.html', states=states)
 
+
 @app.route('/states/<id>', strict_slashes=False)
 def states_id(id):
     """Lists states by cities"""
