@@ -13,14 +13,16 @@ def close_storage(self):
     storage.close()
 
 
-@app.route('/states/')
-@app.route('/states/<st_id>', strict_slashes=False)
-def states_id(state_id=None):
+@app.route('/states/<id>', strict_slashes=False)
+def states_id(id):
     """Lists states by cities"""
-    states = storage.all(State)
-    if st_id != None:
-        st_id = 'State.' + st_id
-    return render_template('9-states.html', states=states, st_id=state_id)
+    states = storage.all(State).values()
+    for state in states:
+        if id == state.id:
+            return render_template('9-states.html',
+                                   state=state, state_cities=state.cities)
+
+    return render_template('9-states.html', not_found=True)
 
 
 if __name__ == '__main__':
